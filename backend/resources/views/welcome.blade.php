@@ -28,13 +28,6 @@
             border-radius: 5px;
             margin: 20px 0;
         }
-        .endpoint {
-            background: #e9ecef;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 3px;
-            font-family: monospace;
-        }
     </style>
 </head>
 <body>
@@ -42,20 +35,6 @@
         <div class="header">
             <h1>🏪 Stock Management System API</h1>
             <p>Laravel Backend is Running Successfully!</p>
-        </div>
-        
-        <div class="api-info">
-            <h3>📡 Available API Endpoints:</h3>
-            <div class="endpoint">POST /api/register - User Registration</div>
-            <div class="endpoint">POST /api/login - User Login</div>
-            <div class="endpoint">GET /sanctum/csrf-cookie - Get CSRF Cookie</div>
-            <div class="endpoint">GET /api/user - Get Authenticated User (Protected)</div>
-        </div>
-        
-        <div class="api-info">
-            <h3>🔧 Frontend Connection:</h3>
-            <p>Your React frontend should connect to: <strong>http://localhost:8000/api</strong></p>
-            <p>CORS is configured for: <strong>http://localhost:5173</strong></p>
         </div>
         
         <div class="api-info">

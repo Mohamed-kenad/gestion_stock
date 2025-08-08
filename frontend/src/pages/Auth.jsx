@@ -1,22 +1,42 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { User, Mail, Lock, ArrowRight } from "lucide-react"
-import api from "@/api/api"
+import api from "@/lib/api"
 import { showError, showSuccess } from "@/components/ui/notify"
-import axios from "axios"
+import { useAuth } from "@/context/AuthContext"
+import { useNavigate } from "react-router-dom";
+import { BeatLoader } from "react-spinners"
 
-export default function Component() {
+export default function Auth() {
+  const {user, updateAuthState, loading, isAuthenticated} = useAuth();
   const [isLogin, setIsLogin] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: ""
   });
+
+  useEffect(() => {
+    if (isAuthenticated && !loading) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, loading, navigate]);
+
+
+  if (loading) {
+    return (
+            <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
+                <BeatLoader color="#9c20d5" />
+            </div> 
+           );
+  }
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -39,7 +59,9 @@ export default function Component() {
           password: data.password
         });
         if (response.status === 200) {
+          updateAuthState(response.data.token, response.data.user)
           showSuccess(response.data.message);
+          navigate('/dashboard')
         }
       } else {
         const response = await api.post("/register", {
